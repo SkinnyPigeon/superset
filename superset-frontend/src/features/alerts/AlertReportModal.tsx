@@ -426,6 +426,7 @@ const AlertReportModal: FunctionComponent<AlertReportModalProps> = ({
     DEFAULT_NOTIFICATION_FORMAT,
   );
   const [forceScreenshot, setForceScreenshot] = useState<boolean>(false);
+  const [includeIndex, setIncludeIndex] = useState<boolean>(false);
 
   const [isScreenshot, setIsScreenshot] = useState<boolean>(false);
   useEffect(() => {
@@ -630,6 +631,7 @@ const AlertReportModal: FunctionComponent<AlertReportModalProps> = ({
       ...currentAlert,
       type: isReport ? 'Report' : 'Alert',
       force_screenshot: shouldEnableForceScreenshot || forceScreenshot,
+      includeIndex: includeIndex,
       validator_type: conditionNotNull ? 'not null' : 'operator',
       validator_config_json: conditionNotNull
         ? {}
@@ -993,6 +995,10 @@ const AlertReportModal: FunctionComponent<AlertReportModalProps> = ({
 
   const onForceScreenshotChange = (event: any) => {
     setForceScreenshot(event.target.checked);
+  };
+
+  const onIncludeIndexChange = (event: any) => {
+    setIncludeIndex(event.target.checked);
   };
 
   // Make sure notification settings has the required info
@@ -1629,6 +1635,18 @@ const AlertReportModal: FunctionComponent<AlertReportModalProps> = ({
                 onChange={onForceScreenshotChange}
               >
                 {t('Ignore cache when generating report')}
+              </StyledCheckbox>
+            </div>
+          )}
+          {(isReport) && (
+            <div className="inline-container">
+              <StyledCheckbox
+                data-test="include-index"
+                className="checkbox"
+                checked={includeIndex}
+                onChange={onIncludeIndexChange}
+              >
+                {t('Include index column')}
               </StyledCheckbox>
             </div>
           )}

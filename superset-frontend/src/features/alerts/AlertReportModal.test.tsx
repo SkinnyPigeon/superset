@@ -411,6 +411,21 @@ test('renders screenshot options when dashboard is selected', async () => {
       name: /ignore cache when generating report/i,
     }),
   ).toBeInTheDocument();
+
+});
+
+test('properly renders include index checkbox', async () => {
+  render(<AlertReportModal {...generateMockedProps(true, true, false)} />, {
+    useRedux: true,
+  });
+  userEvent.click(screen.getByTestId('contents-panel'));
+  await screen.findByText(/test chart/i);
+  expect(
+    screen.getByRole('checkbox', {
+      name: /include index column/i,
+    }),
+  ).toBeInTheDocument();
+
 });
 
 test('changes to content options when chart is selected', async () => {
